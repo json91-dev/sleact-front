@@ -4,15 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var path_1 = __importDefault(require("path"));
-// import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 var webpack_1 = __importDefault(require("webpack"));
-// import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-// import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
-// interface Configuration extends WebpackConfiguration {
-//     devServer?: WebpackDevServerConfiguration;
-// }
+var fork_ts_checker_webpack_plugin_1 = __importDefault(require("fork-ts-checker-webpack-plugin"));
 var isDevelopment = process.env.NODE_ENV !== 'production';
+// @ts-ignore
+// @ts-ignore
 var config = {
     name: 'sleact',
     mode: isDevelopment ? 'development' : 'production',
@@ -49,6 +45,11 @@ var config = {
                         '@babel/preset-react',
                         '@babel/preset-typescript',
                     ],
+                    env: {
+                        development: {
+                            plugins: [require.resolve('react-refresh/babel')],
+                        },
+                    },
                 },
             },
             {
@@ -58,12 +59,12 @@ var config = {
         ],
     },
     plugins: [
-        // new ForkTsCheckerWebpackPlugin({
-        //     async: false,
-        //     // eslint: {
-        //     //   files: "./src/**/*",
-        //     // },
-        // }),
+        new fork_ts_checker_webpack_plugin_1.default({
+            async: false,
+            // eslint: {
+            //   files: "./src/**/*",
+            // },
+        }),
         new webpack_1.default.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
     ],
     output: {
@@ -71,19 +72,19 @@ var config = {
         filename: '[name].js',
         publicPath: '/dist/',
     },
-    // devServer: {
-    //     historyApiFallback: true,
-    //     port: 3090,
-    //     devMiddleware: { publicPath: '/dist/' },
-    //     static: { directory: path.resolve(__dirname) },
-    //     proxy: {
-    //         '/api/': {
-    //             target: 'http://localhost:3095',
-    //             changeOrigin: true,
-    //             ws: true,
-    //         },
-    //     },
-    // },
+    devServer: {
+        historyApiFallback: true,
+        port: 3090,
+        devMiddleware: { publicPath: '/dist/' },
+        static: { directory: path_1.default.resolve(__dirname) },
+        // proxy: {
+        //     '/api/': {
+        //         target: 'http://localhost:3095',
+        //         changeOrigin: true,
+        //         ws: true,
+        //     },
+        // },
+    },
 };
 // if (isDevelopment && config.plugins) {
 //     config.plugins.push(new webpack.HotModuleReplacementPlugin());
