@@ -18,21 +18,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var useInput_1 = __importDefault(require("@hooks/useInput"));
 var react_1 = __importStar(require("react"));
 var styles_1 = require("./styles");
 var SignUp = function () {
-    var _a = (0, react_1.useState)(''), email = _a[0], setEmail = _a[1];
-    var _b = (0, react_1.useState)(''), nickname = _b[0], setNickname = _b[1];
-    var _c = (0, react_1.useState)(''), password = _c[0], setPassword = _c[1];
-    var _d = (0, react_1.useState)(''), passwordCheck = _d[0], setPasswordCheck = _d[1];
+    var _a = (0, useInput_1.default)(''), email = _a[0], onChangeEmail = _a[1];
+    var _b = (0, useInput_1.default)(''), nickname = _b[0], onChangeNickname = _b[1];
+    var _c = (0, useInput_1.default)(''), password = _c[0], setPassword = _c[2];
+    var _d = (0, useInput_1.default)(''), passwordCheck = _d[0], setPasswordCheck = _d[2];
     var _e = (0, react_1.useState)(false), mismatchError = _e[0], setMismatchError = _e[1];
-    var onChangeEmail = (0, react_1.useCallback)(function (e) {
-        setEmail(e.target.value);
-    }, []);
-    var onChangeNickname = (0, react_1.useCallback)(function (e) {
-        setNickname(e.target.value);
-    }, []);
     var onChangePassword = (0, react_1.useCallback)(function (e) {
         setPassword(e.target.value);
         setMismatchError(e.target.value !== passwordCheck);
