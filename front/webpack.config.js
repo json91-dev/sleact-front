@@ -77,13 +77,13 @@ var config = {
         port: 3090,
         devMiddleware: { publicPath: '/dist/' },
         static: { directory: path_1.default.resolve(__dirname) },
-        // proxy: {
-        //     '/api/': {
-        //         target: 'http://localhost:3095',
-        //         changeOrigin: true,
-        //         ws: true,
-        //     },
-        // },
+        proxy: {
+            '/api/': {
+                target: 'http://localhost:3095',
+                changeOrigin: true,
+                ws: true,
+            },
+        },
     },
 };
 // if (isDevelopment && config.plugins) {

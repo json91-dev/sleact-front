@@ -25,12 +25,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var useInput_1 = __importDefault(require("@hooks/useInput"));
 var react_1 = __importStar(require("react"));
 var styles_1 = require("./styles");
+var axios_1 = __importDefault(require("axios"));
+var react_router_dom_1 = require("react-router-dom");
 var SignUp = function () {
     var _a = (0, useInput_1.default)(''), email = _a[0], onChangeEmail = _a[1];
     var _b = (0, useInput_1.default)(''), nickname = _b[0], onChangeNickname = _b[1];
     var _c = (0, useInput_1.default)(''), password = _c[0], setPassword = _c[2];
     var _d = (0, useInput_1.default)(''), passwordCheck = _d[0], setPasswordCheck = _d[2];
     var _e = (0, react_1.useState)(false), mismatchError = _e[0], setMismatchError = _e[1];
+    var _f = (0, react_1.useState)(''), signUpError = _f[0], setSignUpError = _f[1];
+    var _g = (0, react_1.useState)(false), signUpSuccess = _g[0], setSignUpSuccess = _g[1];
     var onChangePassword = (0, react_1.useCallback)(function (e) {
         setPassword(e.target.value);
         setMismatchError(e.target.value !== passwordCheck);
@@ -41,9 +45,23 @@ var SignUp = function () {
     }, [password]);
     var onSubmit = (0, react_1.useCallback)(function (e) {
         e.preventDefault();
-        console.log(email, nickname, password, passwordCheck);
-        if (!mismatchError) {
+        if (!mismatchError && nickname) {
             console.log('서버로 회원가입하기');
+            setSignUpError('');
+            setSignUpSuccess(false);
+            axios_1.default.post('/api/users', {
+                email: email,
+                nickname: nickname,
+                password: password,
+            })
+                .then(function (response) {
+                console.log(response);
+                setSignUpSuccess(true);
+            })
+                .catch(function (error) {
+                setSignUpError(error.response.data);
+            })
+                .finally(function () { });
         }
     }, [email, nickname, password, passwordCheck]);
     console.log(mismatchError);
@@ -67,11 +85,13 @@ var SignUp = function () {
                 react_1.default.createElement("div", null,
                     react_1.default.createElement(styles_1.Input, { type: "password", id: "password-check", name: "password-check", value: passwordCheck, onChange: onChangePasswordCheck })),
                 mismatchError && react_1.default.createElement(styles_1.Error, null, "\uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."),
-                !nickname && react_1.default.createElement(styles_1.Error, null, "\uB2C9\uB124\uC784\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.")),
+                !nickname && react_1.default.createElement(styles_1.Error, null, "\uB2C9\uB124\uC784\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694."),
+                signUpError && react_1.default.createElement(styles_1.Error, null, signUpError),
+                signUpSuccess && react_1.default.createElement(styles_1.Success, null, "\uD68C\uC6D0\uAC00\uC785\uB418\uC5C8\uC2B5\uB2C8\uB2E4! \uB85C\uADF8\uC778\uD574\uC8FC\uC138\uC694.")),
             react_1.default.createElement(styles_1.Button, { type: "submit" }, "\uD68C\uC6D0\uAC00\uC785")),
         react_1.default.createElement(styles_1.LinkContainer, null,
             "\uC774\uBBF8 \uD68C\uC6D0\uC774\uC2E0\uAC00\uC694?\u00A0",
-            react_1.default.createElement("a", { href: "/login" }, "\uB85C\uADF8\uC778 \uD558\uB7EC\uAC00\uAE30"))));
+            react_1.default.createElement(react_router_dom_1.Link, { to: "/login" }, "\uB85C\uADF8\uC778 \uD558\uB7EC\uAC00\uAE30"))));
 };
 exports.default = SignUp;
 //# sourceMappingURL=index.js.map

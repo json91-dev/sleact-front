@@ -82,13 +82,13 @@ const config: Configuration = {
     port: 3090, // 프론트서버는 0, 백엔드 서버는 5
     devMiddleware: { publicPath: '/dist/' },
     static: { directory: path.resolve(__dirname) },
-    // proxy: {
-    //     '/api/': {
-    //         target: 'http://localhost:3095',
-    //         changeOrigin: true,
-    //         ws: true,
-    //     },
-    // },
+    proxy: {
+        '/api/': {
+            target: 'http://localhost:3095',
+            changeOrigin: true,
+            ws: true,
+        },
+    },
   },
 
 };
