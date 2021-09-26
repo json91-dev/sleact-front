@@ -7,7 +7,9 @@ import { Link, Redirect } from 'react-router-dom';
 import useSWR from 'swr';
 
 const LogIn = () => {
-  const { data: userData, error, revalidate } = useSWR('/api/users', fetcher);
+  const { data: userData, error, revalidate } = useSWR('/api/users', fetcher, {
+    dedupingInterval: 10000, // 10초에 한번
+  });
   const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');

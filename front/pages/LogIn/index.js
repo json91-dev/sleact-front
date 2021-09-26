@@ -30,7 +30,9 @@ var react_1 = __importStar(require("react"));
 var react_router_dom_1 = require("react-router-dom");
 var swr_1 = __importDefault(require("swr"));
 var LogIn = function () {
-    var _a = (0, swr_1.default)('/api/users', fetcher_1.default), userData = _a.data, error = _a.error, revalidate = _a.revalidate;
+    var _a = (0, swr_1.default)('/api/users', fetcher_1.default, {
+        dedupingInterval: 10000, // 10초에 한번
+    }), userData = _a.data, error = _a.error, revalidate = _a.revalidate;
     var _b = (0, react_1.useState)(false), logInError = _b[0], setLogInError = _b[1];
     var _c = (0, useInput_1.default)(''), email = _c[0], onChangeEmail = _c[1];
     var _d = (0, useInput_1.default)(''), password = _d[0], onChangePassword = _d[1];
