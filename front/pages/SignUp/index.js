@@ -27,14 +27,17 @@ var react_1 = __importStar(require("react"));
 var styles_1 = require("./styles");
 var axios_1 = __importDefault(require("axios"));
 var react_router_dom_1 = require("react-router-dom");
+var swr_1 = __importDefault(require("swr"));
+var fetcher_1 = __importDefault(require("@utils/fetcher"));
 var SignUp = function () {
-    var _a = (0, useInput_1.default)(''), email = _a[0], onChangeEmail = _a[1];
-    var _b = (0, useInput_1.default)(''), nickname = _b[0], onChangeNickname = _b[1];
-    var _c = (0, useInput_1.default)(''), password = _c[0], setPassword = _c[2];
-    var _d = (0, useInput_1.default)(''), passwordCheck = _d[0], setPasswordCheck = _d[2];
-    var _e = (0, react_1.useState)(false), mismatchError = _e[0], setMismatchError = _e[1];
-    var _f = (0, react_1.useState)(''), signUpError = _f[0], setSignUpError = _f[1];
-    var _g = (0, react_1.useState)(false), signUpSuccess = _g[0], setSignUpSuccess = _g[1];
+    var _a = (0, swr_1.default)('/api/users', fetcher_1.default), data = _a.data, error = _a.error, revalidate = _a.revalidate;
+    var _b = (0, useInput_1.default)(''), email = _b[0], onChangeEmail = _b[1];
+    var _c = (0, useInput_1.default)(''), nickname = _c[0], onChangeNickname = _c[1];
+    var _d = (0, useInput_1.default)(''), password = _d[0], setPassword = _d[2];
+    var _e = (0, useInput_1.default)(''), passwordCheck = _e[0], setPasswordCheck = _e[2];
+    var _f = (0, react_1.useState)(false), mismatchError = _f[0], setMismatchError = _f[1];
+    var _g = (0, react_1.useState)(''), signUpError = _g[0], setSignUpError = _g[1];
+    var _h = (0, react_1.useState)(false), signUpSuccess = _h[0], setSignUpSuccess = _h[1];
     var onChangePassword = (0, react_1.useCallback)(function (e) {
         setPassword(e.target.value);
         setMismatchError(e.target.value !== passwordCheck);
@@ -64,7 +67,12 @@ var SignUp = function () {
                 .finally(function () { });
         }
     }, [email, nickname, password, passwordCheck]);
-    console.log(mismatchError);
+    if (data === undefined) {
+        return react_1.default.createElement("div", null, "\uB85C\uB529\uC911...");
+    }
+    if (data) {
+        return react_1.default.createElement(react_router_dom_1.Redirect, { to: "/workspace/channel" });
+    }
     return (react_1.default.createElement("div", { id: "container" },
         react_1.default.createElement(styles_1.Header, null, "Sleact"),
         react_1.default.createElement(styles_1.Form, { onSubmit: onSubmit },

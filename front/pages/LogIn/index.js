@@ -30,9 +30,7 @@ var react_1 = __importStar(require("react"));
 var react_router_dom_1 = require("react-router-dom");
 var swr_1 = __importDefault(require("swr"));
 var LogIn = function () {
-    var _a = (0, swr_1.default)('/api/users', fetcher_1.default, {
-        dedupingInterval: 10000, // 10초에 한번
-    }), userData = _a.data, error = _a.error, revalidate = _a.revalidate;
+    var _a = (0, swr_1.default)('/api/users', fetcher_1.default), data = _a.data, error = _a.error, revalidate = _a.revalidate;
     var _b = (0, react_1.useState)(false), logInError = _b[0], setLogInError = _b[1];
     var _c = (0, useInput_1.default)(''), email = _c[0], onChangeEmail = _c[1];
     var _d = (0, useInput_1.default)(''), password = _d[0], onChangePassword = _d[1];
@@ -44,18 +42,26 @@ var LogIn = function () {
             withCredentials: true,
         })
             .then(function () {
-            revalidate();
+            revalidate(); // data를 get요청으로 가져옴.
         })
             .catch(function (error) {
             var _a, _b;
             setLogInError(((_b = (_a = error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.statusCode) === 401);
         });
     }, [email, password]);
-    console.log(error, userData);
-    if (!error && userData) {
-        console.log('로그인됨', userData);
-        return react_1.default.createElement(react_router_dom_1.Redirect, { to: "/workspace/sleact/channel/\uC77C\uBC18" });
+    if (data === undefined) {
+        return react_1.default.createElement("div", null, "\uB85C\uB529\uC911...");
     }
+    // 로그인했을때 내 정보가 있으면 channel로 이동
+    if (data) {
+        console.log(data);
+        return react_1.default.createElement(react_router_dom_1.Redirect, { to: "/workspace/channel" });
+    }
+    // console.log(error, userData);
+    // if (!error && userData) {
+    //   console.log('로그인됨', userData);
+    //   return <Redirect to="/workspace/sleact/channel/일반" />;
+    // }
     return (react_1.default.createElement("div", { id: "container" },
         react_1.default.createElement(styles_1.Header, null, "Sleact"),
         react_1.default.createElement(styles_1.Form, { onSubmit: onSubmit },

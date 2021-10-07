@@ -7,9 +7,7 @@ import { Link, Redirect } from 'react-router-dom';
 import useSWR from 'swr';
 
 const LogIn = () => {
-  const { data: userData, error, revalidate } = useSWR('/api/users', fetcher, {
-    dedupingInterval: 10000, // 10초에 한번
-  });
+  const { data, error, revalidate } = useSWR('/api/users', fetcher);
   const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -26,7 +24,7 @@ const LogIn = () => {
           },
         )
         .then(() => {
-          revalidate();
+          revalidate(); // data를 get요청으로 가져옴.
         })
         .catch((error) => {
           setLogInError(error.response?.data?.statusCode === 401);
@@ -35,11 +33,21 @@ const LogIn = () => {
     [email, password],
   );
 
-  console.log(error, userData);
-  if (!error && userData) {
-    console.log('로그인됨', userData);
-    return <Redirect to="/workspace/sleact/channel/일반" />;
+  if (data === undefined) {
+    return <div>로딩중...</div>
   }
+
+  // 로그인했을때 내 정보가 있으면 channel로 이동
+  if (data) {
+    console.log(data);
+    return <Redirect to="/workspace/channel" />
+  }
+
+  // console.log(error, userData);
+  // if (!error && userData) {
+  //   console.log('로그인됨', userData);
+  //   return <Redirect to="/workspace/sleact/channel/일반" />;
+  // }
 
   return (
     <div id="container">
