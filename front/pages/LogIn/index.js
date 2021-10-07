@@ -30,7 +30,7 @@ var react_1 = __importStar(require("react"));
 var react_router_dom_1 = require("react-router-dom");
 var swr_1 = __importDefault(require("swr"));
 var LogIn = function () {
-    var _a = (0, swr_1.default)('/api/users', fetcher_1.default), data = _a.data, error = _a.error, revalidate = _a.revalidate;
+    var _a = (0, swr_1.default)('/api/users', fetcher_1.default), data = _a.data, error = _a.error, revalidate = _a.revalidate, mutate = _a.mutate;
     var _b = (0, react_1.useState)(false), logInError = _b[0], setLogInError = _b[1];
     var _c = (0, useInput_1.default)(''), email = _c[0], onChangeEmail = _c[1];
     var _d = (0, useInput_1.default)(''), password = _d[0], onChangePassword = _d[1];
@@ -41,8 +41,8 @@ var LogIn = function () {
             .post('/api/users/login', { email: email, password: password }, {
             withCredentials: true,
         })
-            .then(function () {
-            revalidate(); // data를 get요청으로 가져옴.
+            .then(function (response) {
+            mutate(response.data, false);
         })
             .catch(function (error) {
             var _a, _b;

@@ -29,13 +29,17 @@ var axios_1 = __importDefault(require("axios"));
 var react_router_1 = require("react-router");
 var Workspace = function (_a) {
     var children = _a.children;
-    var _b = (0, swr_1.default)('/api/users', fetcher_1.default), data = _b.data, error = _b.error, revalidate = _b.revalidate;
+    var _b = (0, swr_1.default)('/api/users', fetcher_1.default, {
+        dedupingInterval: 2000 // 2초
+    }), data = _b.data, error = _b.error, revalidate = _b.revalidate, mutate = _b.mutate;
     var onLogout = (0, react_1.useCallback)(function () {
         axios_1.default.post('http://localhost:3095/api/users/logout', null, {
             withCredentials: true,
         })
             .then(function () {
-            revalidate();
+            // revalidate();
+            // mutate(false)
+            mutate(false, false);
         });
     }, []);
     if (!data) {

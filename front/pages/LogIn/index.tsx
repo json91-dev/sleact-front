@@ -7,7 +7,7 @@ import { Link, Redirect } from 'react-router-dom';
 import useSWR from 'swr';
 
 const LogIn = () => {
-  const { data, error, revalidate } = useSWR('/api/users', fetcher);
+  const { data, error, revalidate, mutate } = useSWR('/api/users', fetcher);
   const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -23,8 +23,8 @@ const LogIn = () => {
             withCredentials: true,
           },
         )
-        .then(() => {
-          revalidate(); // data를 get요청으로 가져옴.
+        .then((response) => {
+          mutate(response.data, false)
         })
         .catch((error) => {
           setLogInError(error.response?.data?.statusCode === 401);
