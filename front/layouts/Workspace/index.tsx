@@ -10,9 +10,13 @@ import {
 import fetcher from "../../utils/fetcher";
 import React, {FC, useCallback} from 'react';
 import axios from "axios";
-import {Redirect} from "react-router";
+import {Redirect, Route, Switch} from "react-router";
 import useSWR from "swr";
 import gravatar from 'gravatar';
+import loadable from "@loadable/component";
+
+const Channel = loadable(() => import('@pages/Channel/index'));
+const DirectMessage = loadable(() => import('@pages/DirectMessage/index'));
 
 const Index: FC = ({children}) => {
   const { data , error, revalidate, mutate } = useSWR('/api/users', fetcher, {
@@ -49,9 +53,13 @@ const Index: FC = ({children}) => {
           <WorkspaceName>Sleact</WorkspaceName>
           <MenuScroll>menu scroll</MenuScroll>
         </Channels>
-        <Chats>chats</Chats>
+        <Chats>
+          <Switch>
+            <Route path="/workspace/channel" component={Channel}/>
+            <Route path="/workspace/dm" component={DirectMessage} />
+          </Switch>
+        </Chats>
       </WorkspaceWrapper>
-      {/*{children}*/}
     </div>
   )
 };

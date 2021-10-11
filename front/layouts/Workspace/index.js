@@ -29,6 +29,9 @@ var axios_1 = __importDefault(require("axios"));
 var react_router_1 = require("react-router");
 var swr_1 = __importDefault(require("swr"));
 var gravatar_1 = __importDefault(require("gravatar"));
+var component_1 = __importDefault(require("@loadable/component"));
+var Channel = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/Channel/index')); }); });
+var DirectMessage = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/DirectMessage/index')); }); });
 var Index = function (_a) {
     var children = _a.children;
     var _b = (0, swr_1.default)('/api/users', fetcher_1.default, {
@@ -56,7 +59,10 @@ var Index = function (_a) {
             react_1.default.createElement(styles_1.Channels, null,
                 react_1.default.createElement(styles_1.WorkspaceName, null, "Sleact"),
                 react_1.default.createElement(styles_1.MenuScroll, null, "menu scroll")),
-            react_1.default.createElement(styles_1.Chats, null, "chats"))));
+            react_1.default.createElement(styles_1.Chats, null,
+                react_1.default.createElement(react_router_1.Switch, null,
+                    react_1.default.createElement(react_router_1.Route, { path: "/workspace/channel", component: Channel }),
+                    react_1.default.createElement(react_router_1.Route, { path: "/workspace/dm", component: DirectMessage }))))));
 };
 exports.default = Index;
 //# sourceMappingURL=index.js.map

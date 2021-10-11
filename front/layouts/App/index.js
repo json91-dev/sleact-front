@@ -25,16 +25,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var react_router_dom_1 = require("react-router-dom");
 var component_1 = __importDefault(require("@loadable/component"));
-var LogIn = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('../../pages/LogIn/index')); }); });
-var SignUp = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('../../pages/SignUp/index')); }); });
-var Channel = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('../../pages/Channel/index')); }); });
+var LogIn = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/LogIn')); }); });
+var SignUp = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/SignUp')); }); });
+var Workspace = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@layouts/Workspace')); }); });
 var Index = function () {
     // @ts-ignore
     return (react_1.default.createElement(react_router_dom_1.Switch, null,
         react_1.default.createElement(react_router_dom_1.Redirect, { exact: true, path: '/', to: "/login" }),
-        react_1.default.createElement(react_router_dom_1.Route, { path: '/login', component: LogIn }),
-        react_1.default.createElement(react_router_dom_1.Route, { path: '/signup', component: SignUp }),
-        react_1.default.createElement(react_router_dom_1.Route, { path: '/workspace/channel', component: Channel })));
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/login", component: LogIn }),
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/signup", component: SignUp }),
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/workspace", component: Workspace })));
 };
 exports.default = Index;
 //# sourceMappingURL=index.js.map
