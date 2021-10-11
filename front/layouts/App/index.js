@@ -25,10 +25,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var react_router_dom_1 = require("react-router-dom");
 var component_1 = __importDefault(require("@loadable/component"));
-var LogIn = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/LogIn')); }); });
-var SignUp = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/SignUp')); }); });
-var Channel = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/Channel')); }); });
-var App = function () {
+var LogIn = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('../../pages/LogIn/index')); }); });
+var SignUp = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('../../pages/SignUp/index')); }); });
+var Channel = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('../../pages/Channel/index')); }); });
+var Index = function () {
     // @ts-ignore
     return (react_1.default.createElement(react_router_dom_1.Switch, null,
         react_1.default.createElement(react_router_dom_1.Redirect, { exact: true, path: '/', to: "/login" }),
@@ -36,5 +36,5 @@ var App = function () {
         react_1.default.createElement(react_router_dom_1.Route, { path: '/signup', component: SignUp }),
         react_1.default.createElement(react_router_dom_1.Route, { path: '/workspace/channel', component: Channel })));
 };
-exports.default = App;
-//# sourceMappingURL=App.js.map
+exports.default = Index;
+//# sourceMappingURL=index.js.map

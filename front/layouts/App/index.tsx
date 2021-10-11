@@ -2,12 +2,11 @@ import React from 'react';
 import { Switch, Route, Redirect} from 'react-router-dom';
 import loadable from "@loadable/component";
 
-const LogIn = loadable(() => import('@pages/LogIn'));
-const SignUp = loadable(() => import('@pages/SignUp'));
-const Channel = loadable(() => import('@pages/Channel'));
+const LogIn = loadable(() => import('../../pages/LogIn/index'));
+const SignUp = loadable(() => import('../../pages/SignUp/index'));
+const Channel = loadable(() => import('../../pages/Channel/index'));
 
-
-const App = () => {
+const Index = () => {
   // @ts-ignore
   return (
     <Switch>
@@ -19,4 +18,4 @@ const App = () => {
   )
 };
 
-export default App;
+export default Index;
