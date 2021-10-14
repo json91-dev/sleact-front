@@ -26,6 +26,8 @@ var Menu = function (_a) {
     var stopPropagation = (0, react_1.useCallback)(function (e) {
         e.stopPropagation();
     }, []);
+    if (!show)
+        return null;
     return (react_1.default.createElement(styles_1.CreateMenu, { onClick: onCloseModal },
         react_1.default.createElement("div", { style: style, onClick: stopPropagation },
             closeButton && react_1.default.createElement(styles_1.CloseModalButton, { onClick: onCloseModal }, "\u00D7"),
