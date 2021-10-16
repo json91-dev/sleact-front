@@ -37,19 +37,23 @@ var styles_2 = require("@pages/SignUp/styles");
 var useInput_1 = __importDefault(require("@hooks/useInput"));
 var react_toastify_1 = require("react-toastify");
 var CreateChannelModal_1 = __importDefault(require("@components/CreateChannelModal"));
+var InviteWorkspaceModal_1 = __importDefault(require("@components/InviteWorkspaceModal"));
+var InviteChannelModal_1 = __importDefault(require("@components/InviteChannelModal"));
 var Channel = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/Channel/index')); }); });
 var DirectMessage = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/DirectMessage/index')); }); });
 var Index = function () {
     var _a = (0, react_1.useState)(false), showUserMenu = _a[0], setShowUserMenu = _a[1];
     var _b = (0, react_1.useState)(false), showCreateWorkspaceModal = _b[0], setShowCreateWorkspaceModal = _b[1];
-    var _c = (0, react_1.useState)(false), showWorkspaceModal = _c[0], setShowWorkspaceModal = _c[1];
-    var _d = (0, react_1.useState)(false), showCreateChannelModal = _d[0], setShowCreateChannelModal = _d[1];
-    var _e = (0, useInput_1.default)(''), newWorkspace = _e[0], onChangeNewWorkspace = _e[1], setNewWorkspace = _e[2];
-    var _f = (0, useInput_1.default)(''), newUrl = _f[0], onChangeNewUrl = _f[1], setNewUrl = _f[2];
+    var _c = (0, react_1.useState)(false), showInviteWorkspaceModal = _c[0], setShowInviteWorkspaceModal = _c[1];
+    var _d = (0, react_1.useState)(false), showInviteChannelModal = _d[0], setShowInviteChannelModal = _d[1];
+    var _e = (0, react_1.useState)(false), showWorkspaceModal = _e[0], setShowWorkspaceModal = _e[1];
+    var _f = (0, react_1.useState)(false), showCreateChannelModal = _f[0], setShowCreateChannelModal = _f[1];
+    var _g = (0, useInput_1.default)(''), newWorkspace = _g[0], onChangeNewWorkspace = _g[1], setNewWorkspace = _g[2];
+    var _h = (0, useInput_1.default)(''), newUrl = _h[0], onChangeNewUrl = _h[1], setNewUrl = _h[2];
     var workspace = (0, react_router_1.useParams)().workspace;
-    var _g = (0, swr_1.default)('/api/users', fetcher_1.default, {
+    var _j = (0, swr_1.default)('/api/users', fetcher_1.default, {
         dedupingInterval: 2000 // 2초
-    }), userData = _g.data, error = _g.error, revalidate = _g.revalidate, mutate = _g.mutate;
+    }), userData = _j.data, error = _j.error, revalidate = _j.revalidate, mutate = _j.mutate;
     var channelData = (0, swr_1.default)(userData ? "http://localhost:3095/api/workspaces/" + workspace + "/channels" : null, fetcher_1.default).data;
     var onLogout = (0, react_1.useCallback)(function () {
         axios_1.default.post('http://localhost:3095/api/users/logout', null, {
@@ -96,12 +100,16 @@ var Index = function () {
     var onCloseModal = (0, react_1.useCallback)(function () {
         setShowCreateWorkspaceModal(false);
         setShowCreateChannelModal(false);
+        setShowInviteWorkspaceModal(false);
+        setShowInviteChannelModal(false);
     }, []);
     var toggleWorkspaceModal = (0, react_1.useCallback)(function () {
         setShowWorkspaceModal(function (prev) { return !prev; });
     }, []);
     var onClickAddChannel = (0, react_1.useCallback)(function () {
         setShowCreateChannelModal(true);
+    }, []);
+    var onClickInviteWorkspace = (0, react_1.useCallback)(function () {
     }, []);
     if (!userData) {
         return react_1.default.createElement(react_router_1.Redirect, { to: "/login" });
@@ -148,7 +156,9 @@ var Index = function () {
                     react_1.default.createElement("span", null, "\uC6CC\uD06C\uC2A4\uD398\uC774\uC2A4 url"),
                     react_1.default.createElement(styles_2.Input, { id: "workspace", value: newUrl, onChange: onChangeNewUrl })),
                 react_1.default.createElement(styles_2.Button, { type: "submit" }, "\uC0DD\uC131\uD558\uAE30"))),
-        react_1.default.createElement(CreateChannelModal_1.default, { show: showCreateChannelModal, onCloseModal: onCloseModal, setShowCreateChannelModal: setShowCreateChannelModal })));
+        react_1.default.createElement(CreateChannelModal_1.default, { show: showCreateChannelModal, onCloseModal: onCloseModal, setShowCreateChannelModal: setShowCreateChannelModal }),
+        react_1.default.createElement(InviteWorkspaceModal_1.default, { show: showInviteWorkspaceModal, onCloseModal: onCloseModal, setShowInviteWorkspaceModal: setShowInviteWorkspaceModal }),
+        react_1.default.createElement(InviteChannelModal_1.default, { show: showInviteChannelModal, onCloseModal: onCloseModal, setShowInviteChannelModal: setShowInviteChannelModal })));
 };
 exports.default = Index;
 //# sourceMappingURL=index.js.map

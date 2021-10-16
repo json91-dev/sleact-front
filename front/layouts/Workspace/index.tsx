@@ -22,6 +22,8 @@ import {Button, Input, Label} from "@pages/SignUp/styles";
 import useInput from "@hooks/useInput";
 import {toast} from 'react-toastify';
 import CreateChannelModal from "@components/CreateChannelModal";
+import InviteWorkspaceModal from "@components/InviteWorkspaceModal";
+import InviteChannelModal from "@components/InviteChannelModal";
 
 const Channel = loadable(() => import('@pages/Channel/index'));
 const DirectMessage = loadable(() => import('@pages/DirectMessage/index'));
@@ -29,6 +31,8 @@ const DirectMessage = loadable(() => import('@pages/DirectMessage/index'));
 const Index: VFC = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showCreateWorkspaceModal, setShowCreateWorkspaceModal] = useState(false);
+  const [showInviteWorkspaceModal, setShowInviteWorkspaceModal] = useState(false);
+  const [showInviteChannelModal, setShowInviteChannelModal] = useState(false);
   const [showWorkspaceModal, setShowWorkspaceModal] = useState(false);
   const [showCreateChannelModal, setShowCreateChannelModal] = useState(false);
   const [newWorkspace, onChangeNewWorkspace, setNewWorkspace] = useInput('');
@@ -93,6 +97,8 @@ const Index: VFC = () => {
   const onCloseModal= useCallback(() => {
     setShowCreateWorkspaceModal(false);
     setShowCreateChannelModal(false);
+    setShowInviteWorkspaceModal(false);
+    setShowInviteChannelModal(false);
   }, []);
 
   const toggleWorkspaceModal = useCallback(() => {
@@ -102,6 +108,10 @@ const Index: VFC = () => {
   const onClickAddChannel = useCallback(() => {
     setShowCreateChannelModal(true)
   }, []);
+
+  const onClickInviteWorkspace = useCallback(() => {
+
+  }, [])
 
   if (!userData) {
     return <Redirect to="/login" />;
@@ -174,7 +184,18 @@ const Index: VFC = () => {
           <Button type="submit">생성하기</Button>
         </form>
       </Modal>
-      <CreateChannelModal show={showCreateChannelModal} onCloseModal={onCloseModal} setShowCreateChannelModal={setShowCreateChannelModal}/>
+      <CreateChannelModal
+        show={showCreateChannelModal}
+        onCloseModal={onCloseModal}
+        setShowCreateChannelModal={setShowCreateChannelModal}/>
+      <InviteWorkspaceModal
+        show={showInviteWorkspaceModal}
+        onCloseModal={onCloseModal}
+        setShowInviteWorkspaceModal={setShowInviteWorkspaceModal}/>
+      <InviteChannelModal
+        show={showInviteChannelModal}
+        onCloseModal={onCloseModal}
+        setShowInviteChannelModal={setShowInviteChannelModal}/>
     </div>
   )
 };
