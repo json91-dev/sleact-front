@@ -40,7 +40,7 @@ const LogIn = () => {
   // 로그인했을때 내 정보가 있으면 channel로 이동
   if (data) {
     console.log(data);
-    return <Redirect to="/workspace/channel" />
+    return <Redirect to="/workspace/sleact/channel/일반" />
   }
 
   // console.log(error, userData);

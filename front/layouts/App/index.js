@@ -34,7 +34,7 @@ var Index = function () {
         react_1.default.createElement(react_router_dom_1.Redirect, { exact: true, path: '/', to: "/login" }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/login", component: LogIn }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/signup", component: SignUp }),
-        react_1.default.createElement(react_router_dom_1.Route, { path: "/workspace", component: Workspace })));
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/workspace/:workspace", component: Workspace })));
 };
 exports.default = Index;
 //# sourceMappingURL=index.js.map

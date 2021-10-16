@@ -46,9 +46,11 @@ var Index = function () {
     var _d = (0, react_1.useState)(false), showCreateChannelModal = _d[0], setShowCreateChannelModal = _d[1];
     var _e = (0, useInput_1.default)(''), newWorkspace = _e[0], onChangeNewWorkspace = _e[1], setNewWorkspace = _e[2];
     var _f = (0, useInput_1.default)(''), newUrl = _f[0], onChangeNewUrl = _f[1], setNewUrl = _f[2];
+    var workspace = (0, react_router_1.useParams)().workspace;
     var _g = (0, swr_1.default)('/api/users', fetcher_1.default, {
         dedupingInterval: 2000 // 2초
     }), userData = _g.data, error = _g.error, revalidate = _g.revalidate, mutate = _g.mutate;
+    var channelData = (0, swr_1.default)(userData ? "http://localhost:3095/api/workspaces/" + workspace + "/channels" : null, fetcher_1.default).data;
     var onLogout = (0, react_1.useCallback)(function () {
         axios_1.default.post('http://localhost:3095/api/users/logout', null, {
             withCredentials: true,
@@ -99,6 +101,7 @@ var Index = function () {
         setShowWorkspaceModal(function (prev) { return !prev; });
     }, []);
     var onClickAddChannel = (0, react_1.useCallback)(function () {
+        setShowCreateChannelModal(true);
     }, []);
     if (!userData) {
         return react_1.default.createElement(react_router_1.Redirect, { to: "/login" });
@@ -119,7 +122,7 @@ var Index = function () {
         react_1.default.createElement(styles_1.WorkspaceWrapper, null,
             react_1.default.createElement(styles_1.Workspaces, null, userData === null || userData === void 0 ? void 0 :
                 userData.Workspaces.map(function (ws) {
-                    return (react_1.default.createElement(react_router_dom_1.Link, { key: ws.id, to: "/workspace/" + 123 + "/channel/\uC77C\uBC18" },
+                    return (react_1.default.createElement(react_router_dom_1.Link, { key: ws.id, to: "/workspace/" + ws.url + "/channel/\uC77C\uBC18" },
                         react_1.default.createElement(styles_1.WorkspaceButton, null, ws.name.slice(0, 1).toUpperCase())));
                 }),
                 react_1.default.createElement(styles_1.AddButton, { onClick: onClickCreateWorkspace }, "+")),
@@ -130,11 +133,12 @@ var Index = function () {
                         react_1.default.createElement(styles_1.WorkspaceModal, null,
                             react_1.default.createElement("h2", null, "Sleact"),
                             react_1.default.createElement("button", { onClick: onClickAddChannel }, "\uCC44\uB110 \uB9CC\uB4E4\uAE30"),
-                            react_1.default.createElement("button", { onClick: onLogout }, "\uB85C\uADF8\uC544\uC6C3"))))),
+                            react_1.default.createElement("button", { onClick: onLogout }, "\uB85C\uADF8\uC544\uC6C3"))), channelData === null || channelData === void 0 ? void 0 :
+                    channelData.map(function (v) { return (react_1.default.createElement("div", null, v.name)); }))),
             react_1.default.createElement(styles_1.Chats, null,
                 react_1.default.createElement(react_router_1.Switch, null,
-                    react_1.default.createElement(react_router_1.Route, { path: "/workspace/channel", component: Channel }),
-                    react_1.default.createElement(react_router_1.Route, { path: "/workspace/dm", component: DirectMessage })))),
+                    react_1.default.createElement(react_router_1.Route, { path: "/workspace/:workspace/channel/:channel", component: Channel }),
+                    react_1.default.createElement(react_router_1.Route, { path: "/workspace/:workspace/dm/:id", component: DirectMessage })))),
         react_1.default.createElement(Modal_1.default, { show: showCreateWorkspaceModal, onCloseModal: onCloseModal },
             react_1.default.createElement("form", { onSubmit: onCreateWorkspace },
                 react_1.default.createElement(styles_2.Label, { id: "workspace-label" },
@@ -144,7 +148,7 @@ var Index = function () {
                     react_1.default.createElement("span", null, "\uC6CC\uD06C\uC2A4\uD398\uC774\uC2A4 url"),
                     react_1.default.createElement(styles_2.Input, { id: "workspace", value: newUrl, onChange: onChangeNewUrl })),
                 react_1.default.createElement(styles_2.Button, { type: "submit" }, "\uC0DD\uC131\uD558\uAE30"))),
-        react_1.default.createElement(CreateChannelModal_1.default, { show: showCreateChannelModal, onCloseModal: onCloseModal })));
+        react_1.default.createElement(CreateChannelModal_1.default, { show: showCreateChannelModal, onCloseModal: onCloseModal, setShowCreateChannelModal: setShowCreateChannelModal })));
 };
 exports.default = Index;
 //# sourceMappingURL=index.js.map

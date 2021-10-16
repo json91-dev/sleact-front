@@ -71,7 +71,7 @@ var SignUp = function () {
         return react_1.default.createElement("div", null, "\uB85C\uB529\uC911...");
     }
     if (data) {
-        return react_1.default.createElement(react_router_dom_1.Redirect, { to: "/workspace/channel" });
+        return react_1.default.createElement(react_router_dom_1.Redirect, { to: "/workspace/sleact/channel/\uC77C\uBC18" });
     }
     return (react_1.default.createElement("div", { id: "container" },
         react_1.default.createElement(styles_1.Header, null, "Sleact"),
