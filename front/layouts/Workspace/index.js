@@ -39,6 +39,7 @@ var react_toastify_1 = require("react-toastify");
 var CreateChannelModal_1 = __importDefault(require("@components/CreateChannelModal"));
 var InviteWorkspaceModal_1 = __importDefault(require("@components/InviteWorkspaceModal"));
 var InviteChannelModal_1 = __importDefault(require("@components/InviteChannelModal"));
+var DMList_1 = __importDefault(require("@components/DMList"));
 var Channel = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/Channel/index')); }); });
 var DirectMessage = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/DirectMessage/index')); }); });
 var Index = function () {
@@ -55,8 +56,9 @@ var Index = function () {
         dedupingInterval: 2000 // 2초
     }), userData = _j.data, error = _j.error, revalidate = _j.revalidate, mutate = _j.mutate;
     var channelData = (0, swr_1.default)(userData ? "http://localhost:3095/api/workspaces/" + workspace + "/channels" : null, fetcher_1.default).data;
+    var memberData = (0, swr_1.default)(userData ? "/api/workspaces/" + workspace + "/members" : null, fetcher_1.default).data;
     var onLogout = (0, react_1.useCallback)(function () {
-        axios_1.default.post('http://localhost:3095/api/users/logout', null, {
+        axios_1.default.post('/api/users/logout', null, {
             withCredentials: true,
         })
             .then(function () {
@@ -141,7 +143,8 @@ var Index = function () {
                         react_1.default.createElement(styles_1.WorkspaceModal, null,
                             react_1.default.createElement("h2", null, "Sleact"),
                             react_1.default.createElement("button", { onClick: onClickAddChannel }, "\uCC44\uB110 \uB9CC\uB4E4\uAE30"),
-                            react_1.default.createElement("button", { onClick: onLogout }, "\uB85C\uADF8\uC544\uC6C3"))), channelData === null || channelData === void 0 ? void 0 :
+                            react_1.default.createElement("button", { onClick: onLogout }, "\uB85C\uADF8\uC544\uC6C3"))),
+                    react_1.default.createElement(DMList_1.default, null), channelData === null || channelData === void 0 ? void 0 :
                     channelData.map(function (v) { return (react_1.default.createElement("div", null, v.name)); }))),
             react_1.default.createElement(styles_1.Chats, null,
                 react_1.default.createElement(react_router_1.Switch, null,

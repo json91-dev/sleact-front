@@ -38,13 +38,13 @@ var CreateChannelModal = function (_a) {
     var _c = (0, swr_1.default)('/api/users', fetcher_1.default, {
         dedupingInterval: 2000 // 2초
     }), userData = _c.data, error = _c.error, revalidate = _c.revalidate, mutate = _c.mutate;
-    var _d = (0, swr_1.default)(userData ? "http://localhost:3095/api/workspaces/" + workspace + "/channels" : null, fetcher_1.default), channelData = _d.data, revalidateChannel = _d.revalidate;
+    var _d = (0, swr_1.default)(userData ? "/api/workspaces/" + workspace + "/channels" : null, fetcher_1.default), channelData = _d.data, revalidateChannel = _d.revalidate;
     var onCreateChannel = (0, react_1.useCallback)(function (e) {
         e.preventDefault();
         if (!newChannel || !newChannel.trim()) {
             return;
         }
-        axios_1.default.post("http://localhost:3095/api/workspaces/" + workspace + "/channels", {
+        axios_1.default.post("/api/workspaces/" + workspace + "/channels", {
             name: newChannel,
         }, {
             withCredentials: true,

@@ -24,6 +24,7 @@ import {toast} from 'react-toastify';
 import CreateChannelModal from "@components/CreateChannelModal";
 import InviteWorkspaceModal from "@components/InviteWorkspaceModal";
 import InviteChannelModal from "@components/InviteChannelModal";
+import DMList from "@components/DMList";
 
 const Channel = loadable(() => import('@pages/Channel/index'));
 const DirectMessage = loadable(() => import('@pages/DirectMessage/index'));
@@ -48,8 +49,14 @@ const Index: VFC = () => {
     fetcher
   );
 
+  const { data: memberData } = useSWR<IUser[]>(
+    userData? `/api/workspaces/${workspace}/members`: null,
+    fetcher,
+  );
+
+
   const onLogout = useCallback(() => {
-    axios.post('http://localhost:3095/api/users/logout', null, {
+    axios.post('/api/users/logout', null, {
       withCredentials: true,
     })
       .then(() => {
@@ -159,6 +166,8 @@ const Index: VFC = () => {
                 <button onClick={onLogout}>로그아웃</button>
               </WorkspaceModal>
             </Menu>
+            {/*<ChannelList/>*/}
+            <DMList/>
             {channelData?.map(v => (
               <div>{v.name}</div>
             ))}

@@ -24,7 +24,7 @@ const CreateChannelModal: VFC<Props> = ({ show, onCloseModal, setShowCreateChann
   });
 
   const { data: channelData, revalidate: revalidateChannel } = useSWR<IChannel[]>(
-    userData? `http://localhost:3095/api/workspaces/${workspace}/channels`: null,
+    userData? `/api/workspaces/${workspace}/channels`: null,
     fetcher
   );
 
@@ -33,7 +33,7 @@ const CreateChannelModal: VFC<Props> = ({ show, onCloseModal, setShowCreateChann
     if (!newChannel || !newChannel.trim()) {
       return;
     }
-    axios.post(`http://localhost:3095/api/workspaces/${workspace}/channels`, {
+    axios.post(`/api/workspaces/${workspace}/channels`, {
       name: newChannel,
     }, {
       withCredentials: true,
