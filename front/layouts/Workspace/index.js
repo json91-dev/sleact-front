@@ -40,6 +40,7 @@ var CreateChannelModal_1 = __importDefault(require("@components/CreateChannelMod
 var InviteWorkspaceModal_1 = __importDefault(require("@components/InviteWorkspaceModal"));
 var InviteChannelModal_1 = __importDefault(require("@components/InviteChannelModal"));
 var DMList_1 = __importDefault(require("@components/DMList"));
+var ChannelList_1 = __importDefault(require("@components/ChannelList"));
 var Channel = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/Channel/index')); }); });
 var DirectMessage = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/DirectMessage/index')); }); });
 var Index = function () {
@@ -112,6 +113,7 @@ var Index = function () {
         setShowCreateChannelModal(true);
     }, []);
     var onClickInviteWorkspace = (0, react_1.useCallback)(function () {
+        setShowInviteWorkspaceModal(true);
     }, []);
     if (!userData) {
         return react_1.default.createElement(react_router_1.Redirect, { to: "/login" });
@@ -142,8 +144,10 @@ var Index = function () {
                     react_1.default.createElement(Menu_1.default, { show: showWorkspaceModal, onCloseModal: toggleWorkspaceModal, style: { top: 95, left: 80 } },
                         react_1.default.createElement(styles_1.WorkspaceModal, null,
                             react_1.default.createElement("h2", null, "Sleact"),
+                            react_1.default.createElement("button", { onClick: onClickInviteWorkspace }, "\uC6CC\uD06C\uC2A4\uD398\uC774\uC2A4\uC5D0 \uC0AC\uC6A9\uC790 \uCD08\uB300"),
                             react_1.default.createElement("button", { onClick: onClickAddChannel }, "\uCC44\uB110 \uB9CC\uB4E4\uAE30"),
                             react_1.default.createElement("button", { onClick: onLogout }, "\uB85C\uADF8\uC544\uC6C3"))),
+                    react_1.default.createElement(ChannelList_1.default, null),
                     react_1.default.createElement(DMList_1.default, null), channelData === null || channelData === void 0 ? void 0 :
                     channelData.map(function (v) { return (react_1.default.createElement("div", null, v.name)); }))),
             react_1.default.createElement(styles_1.Chats, null,

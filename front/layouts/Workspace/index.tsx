@@ -25,6 +25,7 @@ import CreateChannelModal from "@components/CreateChannelModal";
 import InviteWorkspaceModal from "@components/InviteWorkspaceModal";
 import InviteChannelModal from "@components/InviteChannelModal";
 import DMList from "@components/DMList";
+import ChannelList from "@components/ChannelList";
 
 const Channel = loadable(() => import('@pages/Channel/index'));
 const DirectMessage = loadable(() => import('@pages/DirectMessage/index'));
@@ -117,7 +118,7 @@ const Index: VFC = () => {
   }, []);
 
   const onClickInviteWorkspace = useCallback(() => {
-
+    setShowInviteWorkspaceModal(true)
   }, [])
 
   if (!userData) {
@@ -162,11 +163,12 @@ const Index: VFC = () => {
             <Menu show={showWorkspaceModal} onCloseModal={toggleWorkspaceModal} style={{ top: 95, left: 80 }}>
               <WorkspaceModal>
                 <h2>Sleact</h2>
+                <button onClick={onClickInviteWorkspace}>워크스페이스에 사용자 초대</button>
                 <button onClick={onClickAddChannel}>채널 만들기</button>
                 <button onClick={onLogout}>로그아웃</button>
               </WorkspaceModal>
             </Menu>
-            {/*<ChannelList/>*/}
+            <ChannelList/>
             <DMList/>
             {channelData?.map(v => (
               <div>{v.name}</div>
