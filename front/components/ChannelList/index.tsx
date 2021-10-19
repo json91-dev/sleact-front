@@ -1,10 +1,10 @@
 import { CollapseButton } from '@components/DMList/styles';
-// import EachChannel from '@components/EachChannel';
 import { IChannel, IUser } from '@typings/db';
 import fetcher from '@utils/fetcher';
 import React, { FC, useCallback, useState } from 'react';
 import { useParams } from 'react-router';
 import useSWR from 'swr';
+import EachChannel from "@components/EachChannel";
 
 interface Props {
   channelData?: IChannel[];
@@ -35,12 +35,12 @@ const ChannelList: FC<Props> = () => {
         </CollapseButton>
         <span>Channels</span>
       </h2>
-      {/*<div>*/}
-        {/*{!channelCollapse &&*/}
-          {/*channelData?.map((channel) => {*/}
-            {/*return <EachChannel key={channel.id} channel={channel} />;*/}
-          {/*})}*/}
-      {/*</div>*/}
+      <div>
+        {!channelCollapse &&
+          channelData?.map((channel) => {
+            return <EachChannel key={channel.id} channel={channel} />;
+          })}
+      </div>
     </>
   );
 };

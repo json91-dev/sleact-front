@@ -170,9 +170,6 @@ const Index: VFC = () => {
             </Menu>
             <ChannelList/>
             <DMList/>
-            {channelData?.map(v => (
-              <div>{v.name}</div>
-            ))}
           </MenuScroll>
         </Channels>
         <Chats>
@@ -184,7 +181,7 @@ const Index: VFC = () => {
       </WorkspaceWrapper>
       <Modal show={showCreateWorkspaceModal} onCloseModal={onCloseModal}>
         <form onSubmit={onCreateWorkspace}>
-          <Label id="workspace-label">
+          <Label id="wor kspace-label">
             <span>워크스페이스 이름</span>
             <Input id="workspace" value={newWorkspace} onChange={onChangeNewWorkspace}/>
           </Label>

@@ -22,31 +22,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var styles_1 = require("@components/DMList/styles");
 var fetcher_1 = __importDefault(require("@utils/fetcher"));
 var react_1 = __importStar(require("react"));
 var react_router_1 = require("react-router");
+var react_router_dom_1 = require("react-router-dom");
 var swr_1 = __importDefault(require("swr"));
-var EachChannel_1 = __importDefault(require("@components/EachChannel"));
-var ChannelList = function () {
+var EachChannel = function (_a) {
+    var channel = _a.channel;
     var workspace = (0, react_router_1.useParams)().workspace;
-    var _a = (0, react_1.useState)(false), channelCollapse = _a[0], setChannelCollapse = _a[1];
+    var location = (0, react_router_dom_1.useLocation)();
     var userData = (0, swr_1.default)('/api/users', fetcher_1.default, {
         dedupingInterval: 2000, // 2초
     }).data;
-    var channelData = (0, swr_1.default)(userData ? "/api/workspaces/" + workspace + "/channels" : null, fetcher_1.default).data;
-    var toggleChannelCollapse = (0, react_1.useCallback)(function () {
-        setChannelCollapse(function (prev) { return !prev; });
-    }, []);
-    return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement("h2", null,
-            react_1.default.createElement(styles_1.CollapseButton, { collapse: channelCollapse, onClick: toggleChannelCollapse },
-                react_1.default.createElement("i", { className: "c-icon p-channel_sidebar__section_heading_expand p-channel_sidebar__section_heading_expand--show_more_feature c-icon--caret-right c-icon--inherit c-icon--inline", "data-qa": "channel-section-collapse", "aria-hidden": "true" })),
-            react_1.default.createElement("span", null, "Channels")),
-        react_1.default.createElement("div", null, !channelCollapse &&
-            (channelData === null || channelData === void 0 ? void 0 : channelData.map(function (channel) {
-                return react_1.default.createElement(EachChannel_1.default, { key: channel.id, channel: channel });
-            })))));
+    var date = localStorage.getItem(workspace + "-" + channel.name) || 0;
+    var _b = (0, swr_1.default)(userData ? "/api/workspaces/" + workspace + "/channels/" + channel.name + "/unreads?after=" + date : null, fetcher_1.default), count = _b.data, mutate = _b.mutate;
+    (0, react_1.useEffect)(function () {
+        if (location.pathname === "/workspace/" + workspace + "/channel/" + channel.name) {
+            mutate(0);
+        }
+    }, [mutate, location.pathname, workspace, channel]);
+    return (react_1.default.createElement(react_router_dom_1.NavLink, { key: channel.name, activeClassName: "selected", to: "/workspace/" + workspace + "/channel/" + channel.name },
+        react_1.default.createElement("span", { className: count !== undefined && count > 0 ? 'bold' : undefined },
+            "# ",
+            channel.name),
+        count !== undefined && count > 0 && react_1.default.createElement("span", { className: "count" }, count)));
 };
-exports.default = ChannelList;
+exports.default = EachChannel;
 //# sourceMappingURL=index.js.map

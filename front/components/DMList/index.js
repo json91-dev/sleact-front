@@ -22,13 +22,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import EachDM from '@components/EachDM';
 // import useSocket from '@hooks/useSocket';
 var styles_1 = require("@components/DMList/styles");
 var fetcher_1 = __importDefault(require("@utils/fetcher"));
 var react_1 = __importStar(require("react"));
 var react_router_1 = require("react-router");
 var swr_1 = __importDefault(require("swr"));
+var EachDM_1 = __importDefault(require("@components/EachDM"));
 var DMList = function () {
     var workspace = (0, react_router_1.useParams)().workspace;
     var userData = (0, swr_1.default)('/api/users', fetcher_1.default, {
@@ -59,7 +59,12 @@ var DMList = function () {
         react_1.default.createElement("h2", null,
             react_1.default.createElement(styles_1.CollapseButton, { collapse: channelCollapse, onClick: toggleChannelCollapse },
                 react_1.default.createElement("i", { className: "c-icon p-channel_sidebar__section_heading_expand p-channel_sidebar__section_heading_expand--show_more_feature c-icon--caret-right c-icon--inherit c-icon--inline", "data-qa": "channel-section-collapse", "aria-hidden": "true" })),
-            react_1.default.createElement("span", null, "Direct Messages"))));
+            react_1.default.createElement("span", null, "Direct Messages")),
+        react_1.default.createElement("div", null, !channelCollapse &&
+            (memberData === null || memberData === void 0 ? void 0 : memberData.map(function (member) {
+                var isOnline = onlineList.includes(member.id);
+                return react_1.default.createElement(EachDM_1.default, { key: member.id, member: member, isOnline: isOnline });
+            })))));
 };
 exports.default = DMList;
 //# sourceMappingURL=index.js.map
