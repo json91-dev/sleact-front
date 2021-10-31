@@ -32,7 +32,7 @@ var ChatBox = function (_a) {
         if (textareaRef.current) {
             (0, autosize_1.default)(textareaRef.current);
         }
-    }, [textareaRef.current]);
+    }, []);
     var onKeydownChat = (0, react_1.useCallback)(function (e) {
         if (e.key === 'Enter') {
             console.log(e);
@@ -41,7 +41,7 @@ var ChatBox = function (_a) {
                 onSubmitForm(e);
             }
         }
-    }, [chat]);
+    }, [onSubmitForm]);
     return (react_1.default.createElement(styles_1.ChatArea, null,
         react_1.default.createElement(styles_1.Form, { onSubmit: onSubmitForm },
             react_1.default.createElement(styles_1.MentionsTextarea, { value: chat, onChange: onChangeChat, onKeyDown: onKeydownChat, placeholder: placeholder, ref: textareaRef }),

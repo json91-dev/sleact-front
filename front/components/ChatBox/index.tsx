@@ -18,7 +18,7 @@ const ChatBox: FC<Props> = ({ onSubmitForm, chat, onChangeChat, placeholder}) =>
     if (textareaRef.current) {
       autosize(textareaRef.current);
     }
-  }, [textareaRef.current]);
+  }, []);
 
   const onKeydownChat = useCallback(
     (e) => {
@@ -31,7 +31,7 @@ const ChatBox: FC<Props> = ({ onSubmitForm, chat, onChangeChat, placeholder}) =>
         }
       }
     },
-    [chat],
+    [onSubmitForm],
   );
 
 

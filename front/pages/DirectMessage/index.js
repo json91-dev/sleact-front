@@ -30,14 +30,28 @@ var react_router_1 = require("react-router");
 var swr_1 = __importDefault(require("swr"));
 var ChatBox_1 = __importDefault(require("@components/ChatBox"));
 var useInput_1 = __importDefault(require("@hooks/useInput"));
+var axios_1 = __importDefault(require("axios"));
 var DirectMessage = function () {
     var _a = (0, react_router_1.useParams)(), workspace = _a.workspace, id = _a.id;
     var userData = (0, swr_1.default)("/api/workspaces/" + workspace + "/users/" + id, fetcher_1.default).data;
     var myData = (0, swr_1.default)('/api/users', fetcher_1.default).data;
-    var _b = (0, useInput_1.default)(''), chat = _b[0], onChangeChat = _b[1];
+    var _b = (0, useInput_1.default)(''), chat = _b[0], onChangeChat = _b[1], setChat = _b[2];
+    // 채팅을 받아오는 API
+    var _c = (0, swr_1.default)("/api/workspaces/" + workspace + "/dms/" + id + "/chats?perPage=20&page=1", fetcher_1.default), chatData = _c.data, mutateChat = _c.mutate, revalidate = _c.revalidate;
+    // 채팅을 등
     var onSubmitForm = (0, react_1.useCallback)(function (e) {
         e.preventDefault();
-        console.log('submit');
+        if (chat === null || chat === void 0 ? void 0 : chat.trim()) {
+            axios_1.default
+                .post("/api/workspaces/" + workspace + "/dms/" + id + "/chats", {
+                content: chat,
+            })
+                .then(function () {
+                revalidate(); // 채팅 등록후 채팅을 받아옴
+                setChat('');
+            })
+                .catch(console.error);
+        }
     }, []);
     if (!userData || !myData) {
         return null;
