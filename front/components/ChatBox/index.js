@@ -24,11 +24,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var styles_1 = require("@components/ChatBox/styles");
 var autosize_1 = __importDefault(require("autosize"));
-var gravatar_1 = __importDefault(require("gravatar"));
 var react_1 = __importStar(require("react"));
-var react_mentions_1 = require("react-mentions");
 var ChatBox = function (_a) {
-    var onSubmitForm = _a.onSubmitForm, chat = _a.chat, onChangeChat = _a.onChangeChat, placeholder = _a.placeholder, data = _a.data;
+    var onSubmitForm = _a.onSubmitForm, chat = _a.chat, onChangeChat = _a.onChangeChat, placeholder = _a.placeholder;
     var textareaRef = (0, react_1.useRef)(null);
     (0, react_1.useEffect)(function () {
         if (textareaRef.current) {
@@ -37,24 +35,16 @@ var ChatBox = function (_a) {
     }, [textareaRef.current]);
     var onKeydownChat = (0, react_1.useCallback)(function (e) {
         if (e.key === 'Enter') {
-            if (!e.shiftKey) {
+            console.log(e);
+            if (!e.shiftKey) { // shift 키가 눌리지 않고 enter를 쳤을때
                 e.preventDefault();
                 onSubmitForm(e);
             }
         }
     }, [chat]);
-    var renderUserSuggestion = (0, react_1.useCallback)(function (member, search, highlightedDisplay, index, focus) {
-        if (!data) {
-            return null;
-        }
-        return (react_1.default.createElement(styles_1.EachMention, { focus: focus },
-            react_1.default.createElement("img", { src: gravatar_1.default.url(data[index].email, { s: '20px', d: 'retro' }), alt: data[index].nickname }),
-            react_1.default.createElement("span", null, highlightedDisplay)));
-    }, [data]);
     return (react_1.default.createElement(styles_1.ChatArea, null,
         react_1.default.createElement(styles_1.Form, { onSubmit: onSubmitForm },
-            react_1.default.createElement(styles_1.MentionsTextarea, { id: "editor-chat", value: chat, onChange: onChangeChat, onKeyPress: onKeydownChat, placeholder: placeholder, inputRef: textareaRef, allowSuggestionsAboveCursor: true },
-                react_1.default.createElement(react_mentions_1.Mention, { appendSpaceOnAdd: true, trigger: "@", data: (data === null || data === void 0 ? void 0 : data.map(function (v) { return ({ id: v.id, display: v.nickname }); })) || [], renderSuggestion: renderUserSuggestion })),
+            react_1.default.createElement(styles_1.MentionsTextarea, { value: chat, onChange: onChangeChat, onKeyDown: onKeydownChat, placeholder: placeholder, ref: textareaRef }),
             react_1.default.createElement(styles_1.Toolbox, null,
                 react_1.default.createElement(styles_1.SendButton, { className: 'c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium c-texty_input__button c-texty_input__button--send' +
                         ((chat === null || chat === void 0 ? void 0 : chat.trim()) ? '' : ' c-texty_input__button--disabled'), "data-qa": "texty_send_button", "aria-label": "Send message", "data-sk": "tooltip_parent", type: "submit", disabled: !(chat === null || chat === void 0 ? void 0 : chat.trim()) },
