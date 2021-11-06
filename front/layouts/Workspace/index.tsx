@@ -8,7 +8,7 @@ import {
   WorkspaceName, Chats, MenuScroll, ProfileModal, LogOutButton, WorkspaceButton, AddButton, WorkspaceModal
 } from '@layouts/Workspace/styles';
 import fetcher from "../../utils/fetcher";
-import React, {FC, useCallback, useState, VFC} from 'react';
+import React, { FC, useCallback, useEffect, useState, VFC } from 'react';
 import axios from "axios";
 import {Redirect, Route, Switch, useParams} from "react-router";
 import useSWR from "swr";
@@ -26,6 +26,7 @@ import InviteWorkspaceModal from "@components/InviteWorkspaceModal";
 import InviteChannelModal from "@components/InviteChannelModal";
 import DMList from "@components/DMList";
 import ChannelList from "@components/ChannelList";
+import useSocket from '@hooks/useSocket';
 
 const Channel = loadable(() => import('@pages/Channel/index'));
 const DirectMessage = loadable(() => import('@pages/DirectMessage/index'));
@@ -54,6 +55,14 @@ const Index: VFC = () => {
     userData? `/api/workspaces/${workspace}/members`: null,
     fetcher,
   );
+
+  const [socket, disconnect] = useSocket(workspace);
+
+  useEffect(() => {
+    // socket.on('message');
+    // socket.emit();
+    // disconnect();
+  }, []);
 
 
   const onLogout = useCallback(() => {

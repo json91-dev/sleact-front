@@ -41,6 +41,7 @@ var InviteWorkspaceModal_1 = __importDefault(require("@components/InviteWorkspac
 var InviteChannelModal_1 = __importDefault(require("@components/InviteChannelModal"));
 var DMList_1 = __importDefault(require("@components/DMList"));
 var ChannelList_1 = __importDefault(require("@components/ChannelList"));
+var useSocket_1 = __importDefault(require("@hooks/useSocket"));
 var Channel = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/Channel/index')); }); });
 var DirectMessage = (0, component_1.default)(function () { return Promise.resolve().then(function () { return __importStar(require('@pages/DirectMessage/index')); }); });
 var Index = function () {
@@ -58,6 +59,12 @@ var Index = function () {
     }), userData = _j.data, error = _j.error, revalidate = _j.revalidate, mutate = _j.mutate;
     var channelData = (0, swr_1.default)(userData ? "http://localhost:3095/api/workspaces/" + workspace + "/channels" : null, fetcher_1.default).data;
     var memberData = (0, swr_1.default)(userData ? "/api/workspaces/" + workspace + "/members" : null, fetcher_1.default).data;
+    var _k = (0, useSocket_1.default)(workspace), socket = _k[0], disconnect = _k[1];
+    (0, react_1.useEffect)(function () {
+        // socket.on('message');
+        // socket.emit();
+        // disconnect();
+    }, []);
     var onLogout = (0, react_1.useCallback)(function () {
         axios_1.default.post('/api/users/logout', null, {
             withCredentials: true,
